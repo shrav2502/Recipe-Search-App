@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import Recipe from "./Recipe";
 import { Button } from "reactstrap";
+import ErrorBoundary from "./ErrorBoundary";
+import errorimg from "./error.png";
 
 function App() {
   const APP_KEY = "c8025174d0bd47c5a81cb497f09dad6f";
@@ -9,6 +11,8 @@ function App() {
   const [recipe, setRecipe] = useState([]);
   const [input, setInput] = useState("");
   const [query, setQuery] = useState("");
+  const [error, setError] = useState(false);
+  const [loading, isLoading] = useState(true);
 
   useEffect(() => {
     api();
@@ -18,8 +22,13 @@ function App() {
     const response = await fetch(
       `https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${APP_KEY}`
     );
+    if (response.status === 402) {
+      setError(true);
+    }
+    console.log(response);
     const data = await response.json();
     setRecipe(data.results);
+    isLoading(false);
   };
 
   const handleSubmit = (e) => {
@@ -62,6 +71,23 @@ function App() {
     height: "100px",
   };
 
+  if (error) {
+    return (
+      <div style={{ textAlign: "center" }}>
+        <img
+          src={errorimg}
+          alt="img"
+          style={{ height: "400px", width: "450px" }}
+        />
+        <h3>You have reached your daily API request limit</h3>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return <h2>Loading....</h2>;
+  }
+
   return (
     <div className="App" style={styleBody}>
       <div style={{ styleNavbar }}>
@@ -81,6 +107,7 @@ function App() {
           </Button>
         </form>
       </div>
+
       <div style={styleRecipeItems}>
         {recipe.map((recipe) => (
           <Recipe
