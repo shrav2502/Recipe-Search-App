@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import Recipe from "./Recipe";
 import { Button } from "reactstrap";
-import ErrorBoundary from "./ErrorBoundary";
 import errorimg from "./error.png";
 import status200 from "./status200.png";
-import { Link } from "react-router-dom";
 
 function App() {
   const APP_KEY = "c8025174d0bd47c5a81cb497f09dad6f";
@@ -43,6 +41,7 @@ function App() {
     gridTemplateColumns: "380px 380px 380px ",
     gridGap: "30px",
     marginTop: "80px",
+    fontFamily: "Neucha",
   };
 
   const styleBody = {
@@ -73,7 +72,7 @@ function App() {
 
   if (error) {
     return (
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: "center", marginTop: "100px" }}>
         <img
           src={errorimg}
           alt="img"
@@ -121,7 +120,7 @@ function App() {
             alt="img"
             style={{ height: "400px", width: "450px" }}
           />
-          <h3>Ooops! We couldn't find what you wanted.</h3>
+          <h3> We couldn't find what you wanted.</h3>
         </div>
       )}
     </div>
