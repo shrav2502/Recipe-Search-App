@@ -4,6 +4,8 @@ import Recipe from "./Recipe";
 import { Button } from "reactstrap";
 import ErrorBoundary from "./ErrorBoundary";
 import errorimg from "./error.png";
+import status200 from "./status200.png";
+import { Link } from "react-router-dom";
 
 function App() {
   const APP_KEY = "c8025174d0bd47c5a81cb497f09dad6f";
@@ -27,7 +29,7 @@ function App() {
     }
     console.log(response);
     const data = await response.json();
-    setRecipe(data.results);
+    setRecipe(data.results || []);
     isLoading(false);
   };
 
@@ -38,7 +40,8 @@ function App() {
 
   const styleRecipeItems = {
     display: "grid",
-    gridTemplateColumns: "400px 400px 400px ",
+    gridTemplateColumns: "380px 380px 380px ",
+    gridGap: "30px",
     marginTop: "80px",
   };
 
@@ -58,17 +61,14 @@ function App() {
     height: "50px",
   };
 
-  const styleForm = {
-    height: "70px",
-    backgroundColor: "white",
-    padding: "5px",
-  };
-
   const styleNavbar = {
+    width: "1210px",
+    height: "80px",
     top: "0",
     position: "fixed",
-    width: "1200px",
-    height: "100px",
+    backgroundColor: "white",
+    padding: "5px",
+    zIndex: "5",
   };
 
   if (error) {
@@ -84,18 +84,14 @@ function App() {
     );
   }
 
-  if (isLoading) {
+  if (loading) {
     return <h2>Loading....</h2>;
   }
 
   return (
     <div className="App" style={styleBody}>
-      <div style={{ styleNavbar }}>
-        <form
-          className="recipe-submit"
-          onSubmit={handleSubmit}
-          style={styleForm}
-        >
+      <div style={styleNavbar}>
+        <form className="recipe-submit" onSubmit={handleSubmit}>
           <input
             type="text"
             value={input}
@@ -107,17 +103,27 @@ function App() {
           </Button>
         </form>
       </div>
-
-      <div style={styleRecipeItems}>
-        {recipe.map((recipe) => (
-          <Recipe
-            key={recipe.id}
-            title={recipe.title}
-            image={recipe.image}
-            id={recipe.id}
+      {recipe.length != 0 ? (
+        <div style={styleRecipeItems}>
+          {recipe.map((recipe) => (
+            <Recipe
+              key={recipe.id}
+              title={recipe.title}
+              image={recipe.image}
+              id={recipe.id}
+            />
+          ))}
+        </div>
+      ) : (
+        <div style={{ textAlign: "center", marginTop: "100px" }}>
+          <img
+            src={status200}
+            alt="img"
+            style={{ height: "400px", width: "450px" }}
           />
-        ))}
-      </div>
+          <h3>Ooops! We couldn't find what you wanted.</h3>
+        </div>
+      )}
     </div>
   );
 }

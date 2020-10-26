@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function Details({ match }) {
   const [item, setItem] = useState({
@@ -6,6 +7,7 @@ function Details({ match }) {
     extendedIngredients: [],
     diets: [],
   });
+  const [error, setError] = useState(false);
 
   const APP_KEY = "c8025174d0bd47c5a81cb497f09dad6f";
   useEffect(() => {
@@ -16,8 +18,10 @@ function Details({ match }) {
     const response = await fetch(
       `https://api.spoonacular.com/recipes/${match.params.id}/information?apiKey=${APP_KEY}&includeNutrition=false`
     );
+    if (response.status === 404) {
+      setError(true);
+    }
     const data = await response.json();
-    console.log(data);
     setItem(data);
   };
 
@@ -36,6 +40,9 @@ function Details({ match }) {
   const styleIngredients = {
     display: "flex",
     justifyContent: "space-between",
+    padding: "4px",
+    border: "1px solid",
+    borderRadius: "2px",
   };
 
   const styleRightSIde = {
@@ -75,6 +82,14 @@ function Details({ match }) {
     height: "400px",
   };
 
+  if (setError) {
+    return (
+      <h4>
+        Oops! something went wrong! Go back to <Link to="/">Home Page</Link>
+      </h4>
+    );
+  }
+
   return (
     <div className="details-container" style={detailsContainer}>
       <div style={styleLeftSide}>
@@ -85,6 +100,9 @@ function Details({ match }) {
           <h2>{item.title}</h2>
           <h2>{item.readyInMinutes} mins</h2>
         </div>
+        <div>
+          By <a href={item.sourceURL}></a>
+        </div>
         <div
           style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}
         >
@@ -93,7 +111,6 @@ function Details({ match }) {
               {diet}
             </div>
           ))}
-
           {item.dishTypes.map((type) => (
             <div key={type} style={styleType}>
               {type}
@@ -108,14 +125,16 @@ function Details({ match }) {
       </div>
       <div style={styleRightSIde}>
         <h1>ingredients</h1>
-        {item.extendedIngredients.map((item) => (
-          <ul key={item.name}>
-            <li style={styleIngredients}>
-              <span>{item.name}</span>
-              <span>{`${item.measures.us.amount} ${item.measures.us.unitShort}`}</span>
-            </li>
-          </ul>
-        ))}
+        <div>
+          {item.extendedIngredients.map((item) => (
+            <ul key={item.name}>
+              <li style={styleIngredients}>
+                <span>{item.name}</span>
+                <span>{`${item.measures.us.amount} ${item.measures.us.unitShort}`}</span>
+              </li>
+            </ul>
+          ))}
+        </div>
       </div>
     </div>
   );
