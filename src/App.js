@@ -25,10 +25,11 @@ function App() {
     if (response.status === 402) {
       setError(true);
     }
-    console.log(response);
+
     const data = await response.json();
     setRecipe(data.results || []);
     isLoading(false);
+    console.log(data);
   };
 
   const handleSubmit = (e) => {
