@@ -38,18 +38,19 @@ function App() {
   };
 
   const styleRecipeItems = {
+    // width: "1200px",
     display: "grid",
-    gridTemplateColumns: "380px 380px 380px ",
-    gridGap: "30px",
-    marginTop: "80px",
+    gridTemplateColumns: "340px 340px 340px 340px",
+    gridRowGap: "30px",
+    marginTop: "150px",
     fontFamily: "Neucha",
+    justifyContent: "space-around",
+    alignContent: "center",
   };
 
   const styleBody = {
     marginTop: "0",
     padding: "0",
-    width: "1200px",
-    margin: "auto",
     display: "flex",
     flexDirection: "column",
   };
@@ -62,7 +63,8 @@ function App() {
   };
 
   const styleNavbar = {
-    width: "1210px",
+    width: "100%",
+    margin: "0",
     height: "80px",
     top: "0",
     position: "fixed",

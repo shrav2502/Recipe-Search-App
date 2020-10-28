@@ -36,7 +36,7 @@ function Details({ match }) {
 
   const styleLeftSide = {
     overflow: "auto",
-    height: "700px",
+    height: "685px",
     width: "750px",
     display: "flex",
     flexDirection: "column",
@@ -46,7 +46,7 @@ function Details({ match }) {
     display: "flex",
     justifyContent: "space-between",
     padding: "4px",
-    border: "1px solid #d5a249",
+    border: "1px solid #DCDCDC",
     borderRadius: "2px",
   };
 
@@ -81,10 +81,6 @@ function Details({ match }) {
     display: "flex",
     justifyContent: "space-between",
     width: "95%",
-  };
-
-  const styleSummary = {
-    lineHeight: "4px",
   };
 
   const styleImage = {

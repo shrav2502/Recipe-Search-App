@@ -7,7 +7,7 @@ function Recipe({ title, image, id }) {
     <Link to={`/details/${id}`} style={{ textDecoration: "none" }}>
       <Card className="recipe-container">
         <div style={{ textAlign: "center" }}>
-          <CardImg src={image} style={{ height: "310px", width: "380px" }} />
+          <CardImg src={image} style={{ height: "260px", width: "340px" }} />
         </div>
         <CardTitle
           style={{

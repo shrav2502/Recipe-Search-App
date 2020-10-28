@@ -36,6 +36,14 @@ const ModalExample = (props) => {
             ))
           )}
         </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+          <Button color="primary" onClick={toggle}>
+            Done
+          </Button>{" "}
+        </ModalFooter>
       </Modal>
     </div>
   );
